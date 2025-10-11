@@ -1,11 +1,12 @@
 name: Run API Tests with Allure
 
 on:
-  workflow_dispatch: 
+  workflow_dispatch:  
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -23,9 +24,11 @@ jobs:
 
       - name: Install Allure CLI
         run: |
-          sudo apt-add-repository ppa:qameta/allure -y
-          sudo apt-get update
-          sudo apt-get install allure -y
+          mkdir -p /tmp/allure
+          curl -Lo /tmp/allure/allure.zip https://github.com/allure-framework/allure2/releases/download/2.27.2/allure-2.27.2.zip
+          unzip /tmp/allure/allure.zip -d /tmp/allure/
+          sudo ln -s /tmp/allure/allure-2.27.2/bin/allure /usr/local/bin/allure
+          allure --version
 
       - name: Run pytest with Allure
         run: |
@@ -35,9 +38,4 @@ jobs:
       - name: Generate Allure Report
         run: |
           allure generate allure-results --clean -o allure-report
-
-      - name: Deploy Allure Report to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./allure-report
+          echo "Allure report generated in ./allure-report"
