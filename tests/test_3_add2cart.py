@@ -36,9 +36,9 @@ def test_add_to_cart(product_to_add):
                              json=payload, headers=HEADERS)
 
         if resp.status_code in [200, 201]:
-            print(f"✅ Товар добавлен: {product_to_add['name']}")
+            print(f"Товар добавлен: {product_to_add['name']}")
         elif resp.status_code == 409:
-            print("⚠️ Достигнуто максимальное количество товара в корзине")
+            print("Достигнуто максимальное количество товара в корзине")
         else:
             assert False, f"Ошибка при добавлении товара: {resp.status_code}"
 
