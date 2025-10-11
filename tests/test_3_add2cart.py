@@ -3,15 +3,8 @@ import requests
 from dotenv import load_dotenv
 import pytest
 import allure
+from conftest import BASE_URL, ACCESS_TOKEN, load_dotenv, HEADERS
 
-load_dotenv()
-BASE_URL = os.getenv("BASE_URL")
-ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
-
-HEADERS = {
-    "Authorization": f"Bearer {ACCESS_TOKEN}",
-    "Content-Type": "application/json"
-}
 
 @pytest.fixture
 def product_to_add():
